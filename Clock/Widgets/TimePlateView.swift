@@ -28,6 +28,20 @@ class TimePlateView: UIView {
     
     private let model = TimeModel()
     
+    private func animateHands(_ time: [Int]) {
+        guard time.count == 3  else { return }
+        let toAngle: (Int) -> CGFloat = { val in
+            let angle = CGFloat(val) / 60.0 * CGFloat.pi * 2
+            return angle
+        }
+        let hands = [hourHand, minHand, secHand]
+        for i in 0...2 {
+            let angle = toAngle(time[i])
+            hands[i].transform = CATransform3DRotate(CATransform3DIdentity, angle, 0, 0, 1)
+        }
+        
+    }
+    
     private func setup() {
         
         model.timeSubject
@@ -40,7 +54,7 @@ class TimePlateView: UIView {
                     print("timeSubject finished.")
                 }
             }) { time in
-                print(time)
+                self.animateHands([time.hour, time.min, time.sec])
         }
         .store(in: &subscriptions)
         

@@ -115,6 +115,10 @@ extension TimePlateView {
         targetLayer.strokeColor = UIColor.white.cgColor
         targetLayer.lineCap = .round
         targetLayer.lineWidth = width
+        targetLayer.shadowOpacity = 0.8
+        targetLayer.shadowColor = UIColor.black.cgColor
+        targetLayer.shadowRadius = 5.0
+        targetLayer.shadowOffset = .init(width: 0, height: 2)
         
         layer.addSublayer(targetLayer)
     }

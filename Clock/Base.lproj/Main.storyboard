@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WVx-2w-9oi">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Clock" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MSm-cU-UTF" customClass="TimePlateView" customModule="Clock" customModuleProvider="target">
+                                <rect key="frame" x="87" y="301" width="240" height="240"/>
+                                <color key="backgroundColor" red="0.10196078431372549" green="0.10196078431372549" blue="0.1803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="APb-ld-AYg"/>
+                                    <constraint firstAttribute="height" constant="240" id="dPJ-Dq-NZK"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jht-QF-AsM">
+                                <rect key="frame" x="184" y="748" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="dismissAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bXM-tc-mMF"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.10196078431372549" green="0.10196078431372549" blue="0.1803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="jht-QF-AsM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="N63-Zy-tap"/>
+                            <constraint firstItem="MSm-cU-UTF" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Pa9-yb-WoX"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="jht-QF-AsM" secondAttribute="bottom" constant="30" id="Rm0-Gm-SPh"/>
+                            <constraint firstItem="MSm-cU-UTF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fTJ-A7-JCH"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="timePlateView" destination="MSm-cU-UTF" id="pwu-Bn-8LW"/>
+                        <segue destination="iSH-9i-bU2" kind="unwind" identifier="test" unwindAction="unwindTo:" id="9PX-8W-feN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <exit id="iSH-9i-bU2" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="-190" y="137"/>
+        </scene>
+        <!--Test View Controller-->
+        <scene sceneID="imV-Hs-jvf">
+            <objects>
+                <viewController id="WVx-2w-9oi" customClass="TestViewController" customModule="Clock" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CB1-ld-hJB">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ywc-FR-idj">
+                                <rect key="frame" x="184" y="433" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="presentation" id="6Y2-7C-vrG"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="ywc-FR-idj" firstAttribute="centerY" secondItem="CB1-ld-hJB" secondAttribute="centerY" id="XHC-wB-Jmc"/>
+                            <constraint firstItem="ywc-FR-idj" firstAttribute="centerX" secondItem="CB1-ld-hJB" secondAttribute="centerX" id="x23-B5-emZ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Rxz-gZ-GYf"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uiq-bg-Cqm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1068" y="137"/>
+        </scene>
+    </scenes>
+</document>

@@ -24,19 +24,75 @@ class TimePlateView: UIView {
     private var outlinePath: CGPath?
     private var scalePath: CGPath?
     
+    private var currentTime: [Int] = [0, 0, 0]
+    
     private var subscriptions: Set<AnyCancellable> = []
     
     private let model = TimeModel()
     
-    private func animateHands(_ time: [Int]) {
-        guard time.count == 3  else { return }
-        let toAngle: (Int) -> CGFloat = { val in
-            let angle = CGFloat(val) / 60.0 * CGFloat.pi * 2
+    private var touchPoint: CGPoint = .zero
+    private var lastPoint: CGPoint = .zero
+    
+    @objc func panHourHand(_ gesture: UIPanGestureRecognizer) {
+        
+        switch gesture.state {
+        case .began:
+            print("Begin panning.")
+            touchPoint = gesture.location(in: self)
+            model.stopLink()
+            
+        case .changed:
+            let translate = gesture.translation(in: self)
+            let dest = translate.applying(.init(translationX: touchPoint.x-bounds.width/2, y: touchPoint.y-bounds.height/2))
+            let velocity = gesture.velocity(in: self)
+            if lastPoint.x * dest.x < 0 && dest.y < 0 {
+                let hour = (24 + currentTime[0] + (velocity.x > 0 ? 1 : -1)) % 24
+                currentTime[0] = hour
+            }
+            let angle = point2value(dest)
+            let ratio = angle / (CGFloat.pi * 2)
+            let minute = Int(60*ratio)
+            currentTime[1] = minute
+            animateHands()
+            lastPoint = dest
+        case .ended:
+            print("End panning.")
+            model.updateTime(.init(currentTime[0], currentTime[1], currentTime[2]))
+            model.startLink()
+        default:
+            print("gesture: ", gesture.state)
+        }
+        
+    }
+    
+    private func point2value(_ point: CGPoint) -> CGFloat {
+        let radius = min(bounds.width, bounds.height) / 2
+        let scaleR = sqrt(pow(point.x, 2) + pow(point.y, 2))
+        let x = point.x / scaleR * radius
+        
+        var angle = asin(x / radius) / CGFloat.pi
+        if point.y > 0 {
+            angle = 1 - angle
+        }
+        
+        if point.x < 0 && point.y <= 0 {
+            angle = 2 + angle
+        }
+
+        return angle * CGFloat.pi
+    }
+    
+    private func animateHands() {
+        guard currentTime.count == 3  else { return }
+        let toAngle: (Int, CGFloat) -> CGFloat = { val, denominator in
+            let angle = CGFloat(val) / denominator * CGFloat.pi * 2
             return angle
         }
         let hands = [hourHand, minHand, secHand]
         for i in 0...2 {
-            let angle = toAngle(time[i])
+            let denominator: CGFloat = i == 0 ? 12.0 : 60.0
+            let value: Int = i == 0 ? currentTime[i] % 12 : currentTime[i]
+            let angle = toAngle(value, denominator)
             hands[i].transform = CATransform3DRotate(CATransform3DIdentity, angle, 0, 0, 1)
         }
         
@@ -54,7 +110,8 @@ class TimePlateView: UIView {
                     print("timeSubject finished.")
                 }
             }) { time in
-                self.animateHands([time.hour, time.min, time.sec])
+                self.currentTime = [time.hour, time.min, time.sec]
+                self.animateHands()
         }
         .store(in: &subscriptions)
         
@@ -66,6 +123,10 @@ class TimePlateView: UIView {
         }
         
         model.start()
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panHourHand(_:)))
+        panGesture.setTranslation(.zero, in: self)
+        self.addGestureRecognizer(panGesture)
     }
     
     override init(frame: CGRect) {

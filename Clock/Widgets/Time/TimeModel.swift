@@ -34,7 +34,13 @@ class TimeModel {
         
         updateCurrentTime()
         accumulation = 0
+
+        startLink()
         
+    }
+    
+    
+    func startLink() {
         let helper = DisplayLinkHelper()
         
         helper.invokeSubject
@@ -46,25 +52,37 @@ class TimeModel {
                     print("invokeSubject finished.")
                 }
             }) { timeInterval in
-                guard let baseTime = self.startTime else {
-                    print("Start time is Nil.")
-                    self.displayLink?.invalidate()
-                    return
-                }
-                self.accumulate()
-                let target = (self.accumulation + baseTime.totalSeconds) % self.maxSeconds
-                let time = Time(target)
-                self.timeSubject.send(time)
-                
+                self.formTime(timeInterval)
         }
         .store(in: &subscriptions)
         
         displayLink?.invalidate()
         displayLink = .init(target: helper, selector: #selector(helper.invoke(_:)))
-        displayLink?.add(to: .current, forMode: .common)
+        displayLink?.add(to: .current, forMode: .default)
         displayLink?.preferredFramesPerSecond = 1
         updateHelper = helper
         
+    }
+    
+    func stopLink() {
+        displayLink?.invalidate()
+    }
+    
+    func updateTime(_ time: Time) {
+        startTime = time
+        accumulation = 0
+    }
+    
+    private func formTime(_ timeInterval: CFTimeInterval) {
+        guard let baseTime = startTime else {
+            print("Start time is Nil.")
+            displayLink?.invalidate()
+            return
+        }
+        accumulate()
+        let target = (accumulation + baseTime.totalSeconds) % maxSeconds
+        let time = Time(target)
+        timeSubject.send(time)
     }
     
     private func updateCurrentTime()  {
@@ -87,7 +105,7 @@ class TimeModel {
     }
     
     deinit {
-        displayLink?.invalidate()
+        stopLink()
         print("TimeModel Deinited.")
     }
 

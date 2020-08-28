@@ -21,10 +21,13 @@ class TimePlateView: UIView {
     let minHand = CAShapeLayer()
     let secHand = CAShapeLayer()
     
+    let timeSubject: CurrentValueSubject<[Int], Error> = .init([0, 0, 0])
+    let activeSubject: PassthroughSubject<[Int], Error> = .init()
+    
     private var outlinePath: CGPath?
     private var scalePath: CGPath?
     
-    private var currentTime: [Int] = [0, 0, 0]
+    private(set) var currentTime: [Int] = [0, 0, 0]
     
     private var subscriptions: Set<AnyCancellable> = []
     
@@ -57,6 +60,7 @@ class TimePlateView: UIView {
             lastPoint = dest
         case .ended:
             print("End panning.")
+            activeSubject.send(currentTime)
             model.updateTime(.init(currentTime[0], currentTime[1], currentTime[2]))
             model.startLink()
         default:
@@ -111,6 +115,7 @@ class TimePlateView: UIView {
                 }
             }) { time in
                 self.currentTime = [time.hour, time.min, time.sec]
+                self.timeSubject.send(self.currentTime)
                 self.animateHands()
         }
         .store(in: &subscriptions)
@@ -184,24 +189,6 @@ extension TimePlateView {
         layer.addSublayer(targetLayer)
     }
    
-    func creatSecHand() {
-        let width: CGFloat = 1.0
-        let path = UIBezierPath()
-        path.move(to: .init(x: bounds.width / 2, y: bounds.height / 7))
-        path.addLine(to: .init(x: bounds.width / 2, y: bounds.height / 20 * 12))
-        
-        secHand.frame = bounds
-        secHand.path = path.cgPath
-        secHand.fillColor = UIColor.clear.cgColor
-        secHand.strokeColor = UIColor.white.cgColor
-        secHand.lineCap = .round
-        secHand.lineWidth = width
-        
-        layer.addSublayer(secHand)
-        
-        secHand.transform = CATransform3DRotate(secHand.transform, .pi * 0.8, 0, 0, 1)
-    }
-    
     func createOutlinePath() {
         outlinePath = UIBezierPath(ovalIn: bounds).cgPath
     }

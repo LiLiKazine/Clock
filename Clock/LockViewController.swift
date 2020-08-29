@@ -19,20 +19,11 @@ class LockViewController: UIViewController {
     private var verifyNum: Int?
     private var subscriptions: Set<AnyCancellable> = []
     
-    private let completion: (Subscribers.Completion<Error>) -> Void = { completion in
-        switch completion {
-        case .failure(let err):
-            print(String(format: "Subject error at line %d, in file %s: %s", #line, #file, err.localizedDescription))
-        case .finished:
-            break
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         timePlateView.timeSubject
-            .sink(receiveCompletion: completion) { time in
+            .sink { time in
                 let timeStr = String(format: "%02d : %02d : %02d", time[0], time[1], time[2])
                 self.timeLabel.text = timeStr
                 self.verify(time)
@@ -40,10 +31,10 @@ class LockViewController: UIViewController {
         .store(in: &subscriptions)
         
         timePlateView.activeSubject
-            .sink(receiveCompletion: completion) { time in
+            .sink { time in
                 self.verifyNum = 0
         }
-    .store(in: &subscriptions)
+        .store(in: &subscriptions)
         
     }
     

@@ -11,7 +11,7 @@ import Combine
 
 class DisplayLinkHelper {
     
-    let invokeSubject: PassthroughSubject<CFTimeInterval, Error>
+    let invokeSubject: PassthroughSubject<CFTimeInterval, Never>
         
     init() {
         invokeSubject = .init()

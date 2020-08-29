@@ -11,7 +11,7 @@ import Combine
 
 class TimeModel {
     
-    let timeSubject: PassthroughSubject<Time, Error>
+    let timeSubject: PassthroughSubject<Time, Never>
     
     private var displayLink: CADisplayLink?
     
@@ -44,17 +44,10 @@ class TimeModel {
         let helper = DisplayLinkHelper()
         
         helper.invokeSubject
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .failure(let err):
-                    print("invokeSubject error: ", err.localizedDescription)
-                case .finished :
-                    print("invokeSubject finished.")
-                }
-            }) { timeInterval in
+            .sink(receiveValue: { timeInterval in
                 self.formTime(timeInterval)
-        }
-        .store(in: &subscriptions)
+            })
+            .store(in: &subscriptions)
         
         displayLink?.invalidate()
         displayLink = .init(target: helper, selector: #selector(helper.invoke(_:)))

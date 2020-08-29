@@ -21,8 +21,8 @@ class TimePlateView: UIView {
     let minHand = CAShapeLayer()
     let secHand = CAShapeLayer()
     
-    let timeSubject: CurrentValueSubject<[Int], Error> = .init([0, 0, 0])
-    let activeSubject: PassthroughSubject<[Int], Error> = .init()
+    let timeSubject: CurrentValueSubject<[Int], Never> = .init([0, 0, 0])
+    let activeSubject: PassthroughSubject<[Int], Never> = .init()
     
     private var outlinePath: CGPath?
     private var scalePath: CGPath?
@@ -106,14 +106,7 @@ class TimePlateView: UIView {
         
         model.timeSubject
             .receive(on: RunLoop.main)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .failure(let err):
-                    print("timeSubject error: ", err.localizedDescription)
-                case .finished:
-                    print("timeSubject finished.")
-                }
-            }) { time in
+            .sink { time in
                 self.currentTime = [time.hour, time.min, time.sec]
                 self.timeSubject.send(self.currentTime)
                 self.animateHands()

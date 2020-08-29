@@ -22,12 +22,17 @@ class MainViewController: UIViewController {
         
     }
     
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         folderTableView.reloadData()
     }
 
 
+    @IBSegueAction func toAlbum(coder: NSCoder, sender: Any?, segueIdentifier: String?) -> AlbumViewController? {
+        return AlbumViewController(coder: coder)
+    }
+    
     @IBAction func unwindToMain(_ unwindSegue: UIStoryboardSegue) {
         // Use data from the view controller which initiated the unwind segue
     }

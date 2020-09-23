@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19G73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Album" representedClassName="Album" syncable="YES">
+        <attribute name="create_date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="pwd" optional="YES" attributeType="String"/>
+        <attribute name="valid" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="visiable" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="relationship" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Photo" inverseName="relationship" inverseEntity="Photo"/>
+    </entity>
+    <entity name="Photo" representedClassName="Photo" syncable="YES">
+        <attribute name="content" optional="YES" attributeType="Binary"/>
+        <attribute name="create_date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="size" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="thumbnail" optional="YES" attributeType="Binary"/>
+        <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Album" inverseName="relationship" inverseEntity="Album"/>
+    </entity>
+    <elements>
+        <element name="Album" positionX="-63" positionY="-18" width="128" height="133"/>
+        <element name="Photo" positionX="206.0390625" positionY="149.7734375" width="122.6484375" height="133"/>
+    </elements>
+</model>

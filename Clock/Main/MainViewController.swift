@@ -7,11 +7,24 @@
 //
 
 import UIKit
+import CoreData
 
 class MainViewController: UIViewController {
 
     @IBOutlet weak var MaskView: UIView!
     @IBOutlet weak var folderTableView: UITableView!
+    
+    private lazy var persistentContainer: NSPersistentContainer  = {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        return appDelegate.persistentContainer
+    }()
+    
+    private lazy var fm: FolderManager = {
+        let fm = FolderManager(persistentContainer)
+        fm.delegate = self
+        fm.fetch()
+        return fm
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +40,11 @@ class MainViewController: UIViewController {
         super.viewDidAppear(animated)
         folderTableView.reloadData()
     }
-
+    
+    @IBAction func handleAdd(_ sender: UIBarButtonItem) {
+        fm.save("test")
+    }
+    
 
     @IBSegueAction func toAlbum(coder: NSCoder, sender: Any?, segueIdentifier: String?) -> AlbumViewController? {
         return AlbumViewController(coder: coder)
@@ -42,7 +59,7 @@ class MainViewController: UIViewController {
 extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return fm.albums.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -53,5 +70,25 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath)
     }
+    
+}
+
+extension MainViewController: FolderManagerDelegate {
+    func didInsert(album: Album, at indexPath: IndexPath) {
+        folderTableView.reloadData()
+    }
+    
+    func didDelete(album: Album, at indexPath: IndexPath) {
+        
+    }
+    
+    func didUpdate(album: Album, at indexPath: IndexPath) {
+        
+    }
+    
+    func didMove(album: Album, from: IndexPath, to: IndexPath) {
+        
+    }
+    
     
 }

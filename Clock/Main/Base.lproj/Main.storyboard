@@ -140,6 +140,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="uMf-h8-B7a">
                         <barButtonItem key="backBarButtonItem" title=" " id="V9T-WL-LTJ"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="FIA-6H-CTw">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="handleAdd:" destination="WVx-2w-9oi" id="mev-H2-yX5"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>

@@ -40,11 +40,6 @@ class MainViewController: UIViewController {
         super.viewDidAppear(animated)
         folderTableView.reloadData()
     }
-    
-    @IBAction func handleAdd(_ sender: UIBarButtonItem) {
-        fm.save("test")
-    }
-    
 
     @IBSegueAction func toAlbum(coder: NSCoder, sender: Any?, segueIdentifier: String?) -> AlbumViewController? {
         return AlbumViewController(coder: coder)
@@ -52,6 +47,10 @@ class MainViewController: UIViewController {
     
     @IBAction func unwindToMain(_ unwindSegue: UIStoryboardSegue) {
         // Use data from the view controller which initiated the unwind segue
+        if let from = unwindSegue.source as? PopViewController,
+            let name = from.nameTextField.text {
+            fm.save(name)
+        }
     }
   
 }
@@ -64,6 +63,8 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "folder", for: indexPath) as! FolderTableViewCell
+        let album = fm.albums[indexPath.row]
+        cell.setup(nil, album.name, nil)
         return cell
     }
     

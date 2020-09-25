@@ -30,6 +30,7 @@
 		6CAD1F3A251B32AA003B7B72 /* FolderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAD1F39251B32AA003B7B72 /* FolderManager.swift */; };
 		6CD18081251AFD790088066A /* TimePlateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD18080251AFD790088066A /* TimePlateView.swift */; };
 		6CD18085251AFF030088066A /* AlbumManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD18084251AFF030088066A /* AlbumManager.swift */; };
+		6CE8622A251DE5D000008358 /* PopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE86229251DE5D000008358 /* PopViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		6CAD1F39251B32AA003B7B72 /* FolderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderManager.swift; sourceTree = "<group>"; };
 		6CD18080251AFD790088066A /* TimePlateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimePlateView.swift; sourceTree = "<group>"; };
 		6CD18084251AFF030088066A /* AlbumManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumManager.swift; sourceTree = "<group>"; };
+		6CE86229251DE5D000008358 /* PopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 				6CAD1F38251B3202003B7B72 /* CoreData */,
 				09E120E024F8C3C30019344A /* Miscs */,
 				09F6714124F4F18A00C329BA /* Tools */,
+				6CE86226251DE57200008358 /* Widgets */,
 				6CD1807D251AFD2A0088066A /* Lock */,
 				6CD18082251AFD950088066A /* Main */,
 				098461BF24FA20D000953BB4 /* Album */,
@@ -196,6 +199,14 @@
 				09E120E124F8C3FB0019344A /* FolderTableViewCell.swift */,
 			);
 			path = Reusable;
+			sourceTree = "<group>";
+		};
+		6CE86226251DE57200008358 /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				6CE86229251DE5D000008358 /* PopViewController.swift */,
+			);
+			path = Widgets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,6 +282,7 @@
 			files = (
 				098461BE24FA184700953BB4 /* LibraryViewModel.swift in Sources */,
 				09F6714324F4F1A100C329BA /* PresetColors.swift in Sources */,
+				6CE8622A251DE5D000008358 /* PopViewController.swift in Sources */,
 				6CAD1F34251B2AFA003B7B72 /* Photo+CoreDataClass.swift in Sources */,
 				6CAD1F37251B2AFA003B7B72 /* Album+CoreDataProperties.swift in Sources */,
 				09F6714A24F6391B00C329BA /* MainViewController.swift in Sources */,

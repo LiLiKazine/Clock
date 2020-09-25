@@ -15,9 +15,9 @@ class FolderTableViewCell: UITableViewCell {
     @IBOutlet weak var numLabel: UILabel!
     
     func setup(_ cover: UIImage?, _ title: String?, _ num: Int?) {
-        coverImageView.image = cover
-        titleLabel.text = title
-        numLabel.text = num?.description
+        coverImageView.image = cover ?? UIImage(named: "image_cover_placeholder")
+        titleLabel.text = title ?? "Default Folder"
+        numLabel.text = num?.description ?? "0"
     }
 
 }

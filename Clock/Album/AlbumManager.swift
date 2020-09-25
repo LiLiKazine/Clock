@@ -11,7 +11,16 @@ import CoreData
 
 class AlbumManager: NSObject {
     
+    let album: Album
     
+    private lazy var persistentContainer: NSPersistentContainer  = {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        return appDelegate.persistentContainer
+    }()
+    
+    init(album: Album) {
+        self.album = album
+    }
 
 }
 

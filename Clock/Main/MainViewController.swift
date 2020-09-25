@@ -14,13 +14,10 @@ class MainViewController: UIViewController {
     @IBOutlet weak var MaskView: UIView!
     @IBOutlet weak var folderTableView: UITableView!
     
-    private lazy var persistentContainer: NSPersistentContainer  = {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.persistentContainer
-    }()
+
     
     private lazy var fm: FolderManager = {
-        let fm = FolderManager(persistentContainer)
+        let fm = FolderManager()
         fm.delegate = self
         fm.fetch()
         return fm
@@ -41,8 +38,13 @@ class MainViewController: UIViewController {
         folderTableView.reloadData()
     }
 
-    @IBSegueAction func toAlbum(coder: NSCoder, sender: Any?, segueIdentifier: String?) -> AlbumViewController? {
-        return AlbumViewController(coder: coder)
+    @IBSegueAction func toAlbum(coder: NSCoder, sender: FolderTableViewCell?, segueIdentifier: String?) -> AlbumViewController? {
+        guard let indexPath = sender?.indexPath else {
+            return nil
+        }
+        let vc = AlbumViewController(coder: coder)
+        vc?.album = fm.albums[indexPath.row]
+        return vc
     }
     
     @IBAction func unwindToMain(_ unwindSegue: UIStoryboardSegue) {
@@ -64,7 +66,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "folder", for: indexPath) as! FolderTableViewCell
         let album = fm.albums[indexPath.row]
-        cell.setup(nil, album.name, nil)
+        cell.setup(nil, album.name, nil, indexPath)
         return cell
     }
     

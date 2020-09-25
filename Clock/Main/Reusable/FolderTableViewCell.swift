@@ -14,10 +14,13 @@ class FolderTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var numLabel: UILabel!
     
-    func setup(_ cover: UIImage?, _ title: String?, _ num: Int?) {
+    var indexPath: IndexPath?
+    
+    func setup(_ cover: UIImage?, _ title: String?, _ num: Int?, _ indexPath: IndexPath) {
         coverImageView.image = cover ?? UIImage(named: "image_cover_placeholder")
         titleLabel.text = title ?? "Default Folder"
         numLabel.text = num?.description ?? "0"
+        self.indexPath = indexPath
     }
 
 }

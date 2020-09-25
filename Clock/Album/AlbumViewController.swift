@@ -8,17 +8,24 @@
 
 import UIKit
 import Photos
-import Combine
+import CoreData
 
 class AlbumViewController: UIViewController {
 
     @IBOutlet weak var emptyView: UIView!
     @IBOutlet weak var importButton: UIButton!
     @IBOutlet weak var thumbnailCollection: UICollectionView!
+    
+    var album: Album!
+    
+    private lazy var persistentContainer: NSPersistentContainer  = {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        return appDelegate.persistentContainer
+    }()
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        assert(album != nil, "Did not find album.");
     }
     
 

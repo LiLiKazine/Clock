@@ -24,7 +24,10 @@ class FolderManager: NSObject {
         self.fetchedResultsController.fetchedObjects ?? []
     }
     
-    private let persistentContainer: NSPersistentContainer
+    private lazy var persistentContainer: NSPersistentContainer  = {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        return appDelegate.persistentContainer
+    }()
     
     private lazy var fetchedResultsController: NSFetchedResultsController<Album> = {
         let managedContext = persistentContainer.viewContext
@@ -37,24 +40,12 @@ class FolderManager: NSObject {
         return res
     }()
     
-    init(_ container: NSPersistentContainer) {
-        self.persistentContainer = container
-    }
-    
     func fetch() {
         do {
             try fetchedResultsController.performFetch()
         } catch let err {
             print(err.localizedDescription)
         }
-        
-        //        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Album")
-        //
-        //        do {
-        //            albums = try managedContext.fetch(fetchRequest)
-        //        } catch let err {
-        //            print(err.localizedDescription)
-        //        }
     }
     
     func save(_ name: String, _ visiable: Bool = true, _ pwd: String? = nil) {
@@ -72,18 +63,6 @@ class FolderManager: NSObject {
         } catch let err {
             print(err.localizedDescription)
         }
-        //        guard let entity = NSEntityDescription.entity(forEntityName: "Album", in: managedContext) else {
-        //            fatalError("No entity named \"Album\".")
-        //        }
-        //        let album = NSManagedObject(entity: entity, insertInto: managedContext)
-        //        album.setValue("test", forKeyPath: "name");
-        //        do {
-        //            try managedContext.save()
-        //            albums.append(album);
-        //        } catch let err {
-        //            print(err.localizedDescription)
-        //        }
-        
     }
 }
 

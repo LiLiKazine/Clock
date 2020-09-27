@@ -50,7 +50,7 @@ class MainViewController: UIViewController {
     @IBAction func unwindToMain(_ unwindSegue: UIStoryboardSegue) {
         // Use data from the view controller which initiated the unwind segue
         if let from = unwindSegue.source as? PopViewController,
-            let name = from.nameTextField.text {
+            let name = from.name {
             fm.save(name)
         }
     }

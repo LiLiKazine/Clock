@@ -18,6 +18,19 @@ class AlbumViewController: UIViewController {
     
     var album: Album!
     
+    private var editMode: Bool = false {
+        didSet {
+            thumbnailCollection.allowsSelection = editMode
+            thumbnailCollection.allowsMultipleSelection = editMode
+        }
+    }
+    
+    private lazy var manager: AlbumManager = {
+        let manager = AlbumManager(album: album)
+        manager.delegate = self
+        return manager
+    }()
+    
     private lazy var persistentContainer: NSPersistentContainer  = {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.persistentContainer
@@ -26,25 +39,56 @@ class AlbumViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         assert(album != nil, "Did not find album.");
+        updateAlbum()
     }
     
-
-    @IBAction func importAction(_ sender: UIButton) {
-        
+    func updateAlbum() {
+        editMode = false
+        importButton.isHidden = manager.photos.count > 0
+        thumbnailCollection.reloadData()
     }
-
+    
+    @IBAction func unwindToAlbum(_ unwindSegue: UIStoryboardSegue) {
+        if let sourceViewController = unwindSegue.source as? LibraryViewController {
+            let assets = sourceViewController.selectedPhotos
+            manager.importPhotos(assets)
+        }
+    }
+    
 }
 
-extension AlbumViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension AlbumViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoThumbnail", for: indexPath) as! PhotoThumbnailCollectionViewCell
-        
+        if let photo = manager.photos.object(at: indexPath.row) as? Photo,
+            let rawData = photo.thumbnail,
+            let image = UIImage(data: rawData) {
+            cell.setup(image)
+        }
         return cell
     }
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        return manager.photos.count
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return thumbnailSize
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return thumbnailSpacing
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return thumbnailSpacing
+    }
+        
+}
+
+extension AlbumViewController: AlbumManagerDelegate {
+    func didImportPhotos(assets: [PHAsset]) {
+        updateAlbum()
+    }
 }

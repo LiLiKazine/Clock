@@ -12,23 +12,25 @@ import Combine
 
 class LibraryViewModel {
     
-    let dataSource = PassthroughSubject<[UIImage], Never>()
+//    let dataSource = PassthroughSubject<[UIImage], Never>()
     
     var photoCount: Int {
-        return result.count
+        return imageResult.count
     }
     
-    private let result: PHFetchResult<PHAsset>
-    
-    
-    init() {
+    private lazy var imageResult: PHFetchResult<PHAsset> = {
         let options = PHFetchOptions()
-        options.sortDescriptors = [.init(key: "creationDate", ascending: false)]
-        
-        result = PHAsset.fetchAssets(with: .image, options: options)
-    }
+               options.sortDescriptors = [.init(key: "creationDate", ascending: false)]
+        return PHAsset.fetchAssets(with: .image, options: options)
+    }()
+    
     
     func asset(at index: Int) -> PHAsset {
-        return result.object(at: index)
+        return imageResult.object(at: index)
+    }
+    
+    func assets(at indexes: [Int]) -> [PHAsset] {
+        let indexSet = IndexSet(indexes)
+        return imageResult.objects(at: indexSet)
     }
 }

@@ -58,22 +58,15 @@ class FolderManager: NSObject {
         album.visiable = visiable
         album.pwd = pwd
         
-        do {
-            try managedContext.save()
-        } catch let err {
-            print(err.localizedDescription)
-        }
+        commitChanges(context: managedContext)
     }
     
     func delete(_ album: Album) {
         let managedContext = persistentContainer.viewContext
         managedContext.delete(album)
-        do {
-            try managedContext.save()
-        } catch let err {
-            print(err.localizedDescription)
-        }
+        commitChanges(context: managedContext)
     }
+
 }
 
 extension FolderManager: NSFetchedResultsControllerDelegate {

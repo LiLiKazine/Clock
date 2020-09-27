@@ -11,6 +11,8 @@ import Combine
 
 class PopViewController: UIViewController {
     
+    var name: String?
+    
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var confirmButton: UIButton!
@@ -24,6 +26,18 @@ class PopViewController: UIViewController {
 
     @IBAction func editingChanged(_ sender: UITextField) {
         self.confirmButton.isEnabled = sender.text?.isEmpty == false
+    }
+    
+    @IBAction func handleCreation(_ sender: UIButton) {
+        
+        switch sender {
+        case cancelButton:
+            name = nil
+        case confirmButton:
+            name = nameTextField.text
+        default:
+            break
+        }
     }
     
 }

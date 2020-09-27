@@ -74,15 +74,29 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         print(indexPath)
     }
     
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let handler: (UIContextualAction, UIView, @escaping (Bool) -> Void) -> Void = { [weak self] _,_,completion in
+            guard let album = self?.fm.albums[indexPath.row] else {
+                completion(false)
+                return
+            }
+            self?.fm.delete(album)
+            completion(true)
+        }
+        let action = UIContextualAction(style: .destructive, title: "Delete", handler: handler)
+        let config = UISwipeActionsConfiguration(actions: [action])
+        return config
+    }
+    
 }
 
 extension MainViewController: FolderManagerDelegate {
     func didInsert(album: Album, at indexPath: IndexPath) {
-        folderTableView.reloadData()
+        folderTableView.insertRows(at: [indexPath], with: .automatic)
     }
     
     func didDelete(album: Album, at indexPath: IndexPath) {
-        
+        folderTableView.deleteRows(at: [indexPath], with: .automatic)
     }
     
     func didUpdate(album: Album, at indexPath: IndexPath) {

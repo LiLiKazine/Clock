@@ -64,6 +64,16 @@ class FolderManager: NSObject {
             print(err.localizedDescription)
         }
     }
+    
+    func delete(_ album: Album) {
+        let managedContext = persistentContainer.viewContext
+        managedContext.delete(album)
+        do {
+            try managedContext.save()
+        } catch let err {
+            print(err.localizedDescription)
+        }
+    }
 }
 
 extension FolderManager: NSFetchedResultsControllerDelegate {

@@ -18,12 +18,7 @@ class AlbumViewController: UIViewController {
     
     var album: Album!
     
-    private var editMode: Bool = false {
-        didSet {
-            thumbnailCollection.allowsSelection = editMode
-            thumbnailCollection.allowsMultipleSelection = editMode
-        }
-    }
+    private var editMode: Bool = false
     
     private lazy var manager: AlbumManager = {
         let manager = AlbumManager(album: album)
@@ -39,12 +34,14 @@ class AlbumViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         assert(album != nil, "Did not find album.");
+        thumbnailCollection.allowsSelection = true
+        thumbnailCollection.allowsMultipleSelection = true
         updateAlbum()
     }
     
     func updateAlbum() {
-        editMode = false
         importButton.isHidden = manager.photos.count > 0
+        editMode = false
         thumbnailCollection.reloadData()
     }
     
@@ -55,15 +52,30 @@ class AlbumViewController: UIViewController {
         }
     }
     
+    @IBSegueAction func toGallery(coder: NSCoder, sender: PhotoThumbnailCollectionViewCell?, segueIdentifier: String?) -> GalleryViewController? {
+        let vc = GalleryViewController(coder: coder)
+        vc?.albumManager = manager
+        vc?.startIndexPath = sender?.indexPath ?? IndexPath(row: 0, section: 0)
+        return vc
+    }
+    
 }
 
 extension AlbumViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        if !editMode, let sender = collectionView.cellForItem(at: indexPath) {
+            performSegue(withIdentifier: "showGallery", sender: sender)
+        }
+        return editMode
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoThumbnail", for: indexPath) as! PhotoThumbnailCollectionViewCell
         if let photo = manager.photos.object(at: indexPath.row) as? Photo,
             let rawData = photo.thumbnail,
             let image = UIImage(data: rawData) {
-            cell.setup(image)
+            cell.setup(image, indexPath)
         }
         return cell
     }

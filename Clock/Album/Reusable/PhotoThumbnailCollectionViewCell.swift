@@ -14,10 +14,13 @@ class PhotoThumbnailCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var selectionMask: UIView!
     
+    var indexPath: IndexPath?
+    
     var assetIdentifier: String?
     
-    func setup(_ thumbnail: UIImage?) {
+    func setup(_ thumbnail: UIImage?, _ indexPath: IndexPath?) {
         thumbnailImageView.image = thumbnail
+        self.indexPath = indexPath
     }
     
     override var isSelected: Bool {

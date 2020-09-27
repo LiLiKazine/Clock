@@ -257,6 +257,37 @@
             </objects>
             <point key="canvasLocation" x="-157.97101449275362" y="136.60714285714286"/>
         </scene>
+        <!--Gallery View Controller-->
+        <scene sceneID="2fU-2F-LTf">
+            <objects>
+                <viewController storyboardIdentifier="GalleryViewController" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9G5-el-kpt" customClass="GalleryViewController" customModule="Clock" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6TU-Lt-3Mw">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SBV-FB-yn2">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.10196078431372549" green="0.10196078431372549" blue="0.1803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="SBV-FB-yn2" firstAttribute="top" secondItem="CY2-w4-NAQ" secondAttribute="top" id="TsB-bW-DV4"/>
+                            <constraint firstItem="CY2-w4-NAQ" firstAttribute="trailing" secondItem="SBV-FB-yn2" secondAttribute="trailing" id="UAa-ol-DWl"/>
+                            <constraint firstItem="SBV-FB-yn2" firstAttribute="leading" secondItem="CY2-w4-NAQ" secondAttribute="leading" id="g2E-ia-mAb"/>
+                            <constraint firstItem="CY2-w4-NAQ" firstAttribute="bottom" secondItem="SBV-FB-yn2" secondAttribute="bottom" id="umq-F6-QTs"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="CY2-w4-NAQ"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="eFj-XO-v78"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="defaultIV" destination="SBV-FB-yn2" id="AIk-UT-A4l"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6Pd-ue-L1e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-159" y="1651"/>
+        </scene>
         <!--Album View Controller-->
         <scene sceneID="AmC-9z-emk">
             <objects>
@@ -320,6 +351,7 @@
                                                         </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <gestureRecognizers/>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="VVf-N4-tFE" secondAttribute="trailing" constant="8" id="QlA-s0-qO5"/>
                                                         <constraint firstItem="VVf-N4-tFE" firstAttribute="top" secondItem="POG-Wh-ZNY" secondAttribute="top" constant="8" id="hRz-di-T8u"/>
@@ -374,6 +406,7 @@
                         <outlet property="emptyView" destination="9Wh-h3-tMO" id="R2T-v2-cs6"/>
                         <outlet property="importButton" destination="ozE-zQ-nkG" id="OME-e6-BMa"/>
                         <outlet property="thumbnailCollection" destination="H45-ND-QCR" id="ssR-8V-vxc"/>
+                        <segue destination="9G5-el-kpt" kind="show" identifier="showGallery" destinationCreationSelector="toGalleryWithCoder:sender:segueIdentifier:" id="Owj-Nl-k6t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hv2-tx-Yzx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

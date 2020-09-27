@@ -54,7 +54,7 @@ extension LibraryViewController: UICollectionViewDelegateFlowLayout, UICollectio
         cell.assetIdentifier = asset.localIdentifier
         PHImageManager.default().requestImage(for: asset, targetSize: thumbnailSize, contentMode: .aspectFill, options: nil) { (image, _) in
             if cell.assetIdentifier == asset.localIdentifier {
-                cell.setup(image)
+                cell.setup(image, indexPath)
             }
         }
         return cell

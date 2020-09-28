@@ -22,6 +22,9 @@
 		09F6714624F5FF8C00C329BA /* TimeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F6714524F5FF8C00C329BA /* TimeModel.swift */; };
 		09F6714824F62EA900C329BA /* DisplayLinkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F6714724F62EA900C329BA /* DisplayLinkHelper.swift */; };
 		09F6714A24F6391B00C329BA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F6714924F6391B00C329BA /* MainViewController.swift */; };
+		6C217DCB2521DAA7007205FD /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C217DCA2521DAA7007205FD /* PhotoCollectionViewCell.swift */; };
+		6C217DCE2521DB11007205FD /* PhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C217DCD2521DB11007205FD /* PhotoCollectionViewController.swift */; };
+		6C217DD12521DCC1007205FD /* PreviewCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C217DD02521DCC1007205FD /* PreviewCollectionViewController.swift */; };
 		6C83F7E52521C1AD00B4B479 /* SheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C83F7E42521C1AD00B4B479 /* SheetViewController.swift */; };
 		6CAD1F2B251B1C2A003B7B72 /* CoreModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6CAD1F29251B1C2A003B7B72 /* CoreModel.xcdatamodeld */; };
 		6CAD1F34251B2AFA003B7B72 /* Photo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAD1F30251B2AFA003B7B72 /* Photo+CoreDataClass.swift */; };
@@ -54,6 +57,9 @@
 		09F6714524F5FF8C00C329BA /* TimeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeModel.swift; sourceTree = "<group>"; };
 		09F6714724F62EA900C329BA /* DisplayLinkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayLinkHelper.swift; sourceTree = "<group>"; };
 		09F6714924F6391B00C329BA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		6C217DCA2521DAA7007205FD /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		6C217DCD2521DB11007205FD /* PhotoCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewController.swift; sourceTree = "<group>"; };
+		6C217DD02521DCC1007205FD /* PreviewCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewCollectionViewController.swift; sourceTree = "<group>"; };
 		6C83F7E42521C1AD00B4B479 /* SheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetViewController.swift; sourceTree = "<group>"; };
 		6CAD1F2A251B1C2A003B7B72 /* AlbumModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AlbumModel.xcdatamodel; sourceTree = "<group>"; };
 		6CAD1F30251B2AFA003B7B72 /* Photo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Photo+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -162,6 +168,14 @@
 			path = Time;
 			sourceTree = "<group>";
 		};
+		6C217DC82521D96C007205FD /* Reusable */ = {
+			isa = PBXGroup;
+			children = (
+				6C217DCA2521DAA7007205FD /* PhotoCollectionViewCell.swift */,
+			);
+			path = Reusable;
+			sourceTree = "<group>";
+		};
 		6CAD1F38251B3202003B7B72 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
@@ -221,7 +235,10 @@
 		6CE8622E2520D24700008358 /* Gallery */ = {
 			isa = PBXGroup;
 			children = (
+				6C217DC82521D96C007205FD /* Reusable */,
 				6CE8622F2520D26500008358 /* GalleryViewController.swift */,
+				6C217DCD2521DB11007205FD /* PhotoCollectionViewController.swift */,
+				6C217DD02521DCC1007205FD /* PreviewCollectionViewController.swift */,
 			);
 			path = Gallery;
 			sourceTree = "<group>";
@@ -297,12 +314,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C217DD12521DCC1007205FD /* PreviewCollectionViewController.swift in Sources */,
 				098461BE24FA184700953BB4 /* LibraryViewModel.swift in Sources */,
 				09F6714324F4F1A100C329BA /* PresetColors.swift in Sources */,
 				6CE8622A251DE5D000008358 /* PopViewController.swift in Sources */,
 				6CAD1F34251B2AFA003B7B72 /* Photo+CoreDataClass.swift in Sources */,
 				6CAD1F37251B2AFA003B7B72 /* Album+CoreDataProperties.swift in Sources */,
 				09F6714A24F6391B00C329BA /* MainViewController.swift in Sources */,
+				6C217DCB2521DAA7007205FD /* PhotoCollectionViewCell.swift in Sources */,
 				09F6712A24F4DD0400C329BA /* LockViewController.swift in Sources */,
 				6CAD1F35251B2AFA003B7B72 /* Photo+CoreDataProperties.swift in Sources */,
 				6CE8622D252094D400008358 /* Presets.swift in Sources */,
@@ -311,6 +330,7 @@
 				6CAD1F3A251B32AA003B7B72 /* FolderManager.swift in Sources */,
 				6C83F7E52521C1AD00B4B479 /* SheetViewController.swift in Sources */,
 				09E120E424F8E6660019344A /* AlbumViewController.swift in Sources */,
+				6C217DCE2521DB11007205FD /* PhotoCollectionViewController.swift in Sources */,
 				09F6714624F5FF8C00C329BA /* TimeModel.swift in Sources */,
 				6CD18081251AFD790088066A /* TimePlateView.swift in Sources */,
 				6CAD1F36251B2AFA003B7B72 /* Album+CoreDataClass.swift in Sources */,

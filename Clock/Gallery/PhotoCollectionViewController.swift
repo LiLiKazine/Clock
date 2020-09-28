@@ -13,10 +13,24 @@ private let reuseIdentifier = "Cell"
 class PhotoCollectionViewController: UICollectionViewController {
 
     var dataSource = NSOrderedSet()
+    var indexPath: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        guard let ip = indexPath else {
+            return
+        }
+        DispatchQueue.main.async {
+            self.collectionView.scrollToItem(at: ip, at: .centeredHorizontally, animated: false)
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
 
     // MARK: UICollectionViewDataSource

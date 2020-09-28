@@ -26,6 +26,7 @@ class GalleryViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let photoVC = segue.destination as? PhotoCollectionViewController {
             photoVC.dataSource = albumManager.photos
+            photoVC.indexPath = startIndexPath
             displayVC = photoVC
         }
     }

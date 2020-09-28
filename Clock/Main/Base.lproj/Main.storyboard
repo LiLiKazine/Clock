@@ -313,7 +313,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="404" height="808"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Fu-aK-Rk5">
+                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" maximumZoomScale="8" translatesAutoresizingMaskIntoConstraints="NO" id="8Fu-aK-Rk5">
                                             <rect key="frame" x="0.0" y="0.0" width="404" height="808"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="X1A-p9-Jqk">
@@ -328,6 +328,9 @@
                                                 <constraint firstAttribute="trailing" secondItem="X1A-p9-Jqk" secondAttribute="trailing" id="iX5-PE-utD"/>
                                                 <constraint firstItem="X1A-p9-Jqk" firstAttribute="leading" secondItem="8Fu-aK-Rk5" secondAttribute="leading" id="tcX-L8-TAF"/>
                                             </constraints>
+                                            <connections>
+                                                <outlet property="delegate" destination="Vex-de-iDu" id="kbl-jd-yI0"/>
+                                            </connections>
                                         </scrollView>
                                     </subviews>
                                     <color key="backgroundColor" red="0.1019607843" green="0.1019607843" blue="0.18039215689999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -342,6 +345,7 @@
                                 <size key="customSize" width="404" height="808"/>
                                 <connections>
                                     <outlet property="photoIV" destination="X1A-p9-Jqk" id="5gT-xs-MKr"/>
+                                    <outlet property="scrollView" destination="8Fu-aK-Rk5" id="NAw-gj-Xuf"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>

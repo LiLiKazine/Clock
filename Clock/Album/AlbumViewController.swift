@@ -15,6 +15,7 @@ class AlbumViewController: UIViewController {
     @IBOutlet weak var emptyView: UIView!
     @IBOutlet weak var importButton: UIButton!
     @IBOutlet weak var thumbnailCollection: UICollectionView!
+    @IBOutlet weak var rightItem: UIBarButtonItem!
     
     var album: Album!
     
@@ -40,9 +41,39 @@ class AlbumViewController: UIViewController {
     }
     
     func updateAlbum() {
+        setEditMode(false)
         importButton.isHidden = manager.photos.count > 0
-        editMode = false
+//        for ip in thumbnailCollection.indexPathsForSelectedItems ?? [] {
+//            thumbnailCollection.deselectItem(at: ip, animated: false)
+//        }
         thumbnailCollection.reloadData()
+    }
+    
+    func setEditMode(_ flag: Bool) {
+        editMode = flag
+        let style: UIBarButtonItem.SystemItem = flag ? .action : .add
+        let item = UIBarButtonItem(barButtonSystemItem: style, target: self, action: #selector(handleRightItem(_:)))
+        item.tintColor = UIColor.white
+        navigationItem.setRightBarButton(item, animated: true)
+    }
+    
+    @objc func handleRightItem(_ sender: UIBarButtonItem) {
+        if editMode {
+            performSegue(withIdentifier: "showSheet", sender: self)
+        } else {
+            performSegue(withIdentifier: "showLibrary", sender: self)
+        }
+        
+    }
+    
+    @IBAction func unwindFromSheet(_ unwindSegue: UIStoryboardSegue) {
+        if let sourceViewController = unwindSegue.source as? SheetViewController {
+            if let _ = sourceViewController.selected,
+               let indexPathes = thumbnailCollection.indexPathsForSelectedItems {
+                manager.delete(indexPathes)
+            }
+            updateAlbum()
+        }
     }
     
     @IBAction func unwindToAlbum(_ unwindSegue: UIStoryboardSegue) {
@@ -59,6 +90,21 @@ class AlbumViewController: UIViewController {
         return vc
     }
     
+    @IBAction func handlePress(_ sender: UILongPressGestureRecognizer) {
+        if sender.state == .changed && !editMode {
+            let point = sender.location(in: thumbnailCollection)
+            if let indexPath = thumbnailCollection.indexPathForItem(at: point) {
+                setEditMode(true)
+                thumbnailCollection.selectItem(at: indexPath, animated: true, scrollPosition: [])
+            }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let dest = segue.destination as? SheetViewController {
+            dest.setOptions(["delete"])
+        }
+    }
 }
 
 extension AlbumViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
@@ -102,5 +148,9 @@ extension AlbumViewController: UICollectionViewDelegateFlowLayout, UICollectionV
 extension AlbumViewController: AlbumManagerDelegate {
     func didImportPhotos(assets: [PHAsset]) {
         updateAlbum()
+    }
+    
+    func didDeletePhotos(at indexPathes: [IndexPath]) {
+        thumbnailCollection.deleteItems(at: indexPathes)
     }
 }

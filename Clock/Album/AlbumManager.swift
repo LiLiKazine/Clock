@@ -12,6 +12,7 @@ import Photos
 
 protocol AlbumManagerDelegate: class {
     func didImportPhotos(assets: [PHAsset])
+    func didDeletePhotos(at indexPathes: [IndexPath])
     
 }
 
@@ -87,6 +88,17 @@ class AlbumManager: NSObject {
         if commit {
             commitChanges(context: managedContext)
         }
+    }
+    
+    func delete(_ indexPathes: [IndexPath]) {
+        let managedContext = persistentContainer.viewContext
+        let allPhotos = self.photos
+        let photos = indexPathes.compactMap { allPhotos[$0.row] as? Photo }
+        for photo in photos {
+            managedContext.delete(photo)
+        }
+        commitChanges(context: managedContext)
+        delegate?.didDeletePhotos(at: indexPathes)
     }
     
 }

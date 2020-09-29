@@ -11,7 +11,7 @@ import CoreData
 
 class MainViewController: UIViewController {
 
-    @IBOutlet weak var MaskView: UIView!
+    @IBOutlet weak var maskView: UIView!
     @IBOutlet weak var folderTableView: UITableView!
     
 
@@ -26,9 +26,9 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100), execute: {
-//            self.performSegue(withIdentifier: "lock", sender: self)
-//        })
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100), execute: {
+            self.performSegue(withIdentifier: "lock", sender: self)
+        })
         
     }
     
@@ -48,7 +48,9 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func unwindToMain(_ unwindSegue: UIStoryboardSegue) {
-        // Use data from the view controller which initiated the unwind segue
+        if let _ = unwindSegue.source as? LockViewController {
+            self.maskView.isHidden = true
+        }
         if let from = unwindSegue.source as? PopViewController,
             let name = from.name {
             fm.save(name)

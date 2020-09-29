@@ -222,7 +222,7 @@
                                     <outlet property="delegate" destination="WVx-2w-9oi" id="BWj-2Y-f9M"/>
                                 </connections>
                             </tableView>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2oQ-6Y-X0d">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2oQ-6Y-X0d">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                                 <color key="backgroundColor" red="0.1019607843" green="0.1019607843" blue="0.18039215689999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
@@ -251,8 +251,8 @@
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="MaskView" destination="2oQ-6Y-X0d" id="qsE-e7-GGj"/>
                         <outlet property="folderTableView" destination="sX6-MW-mZD" id="7lX-r8-h8v"/>
+                        <outlet property="maskView" destination="2oQ-6Y-X0d" id="qsE-e7-GGj"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="lock" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="h6X-41-Gdc"/>
                     </connections>
                 </viewController>

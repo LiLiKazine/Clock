@@ -23,11 +23,33 @@ class GalleryViewController: UIViewController {
 //        let image = UIImage(data: photo.content!)
     }
     
+    private func handleAction(_ i: Int) {
+        switch i {
+        case 0:
+            print("delete")
+        case 1:
+            print("edit")
+        default:
+            break
+        }
+    }
+    
+    @IBAction func unwindFromSheet(_ unwindSegue: UIStoryboardSegue) {
+        if let sourceViewController = unwindSegue.source as? SheetViewController,
+           let selected = sourceViewController.selected {
+            handleAction(selected)
+        }
+        
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let photoVC = segue.destination as? PhotoCollectionViewController {
             photoVC.dataSource = albumManager.photos
             photoVC.indexPath = startIndexPath
             displayVC = photoVC
+        }
+        if let sheet = segue.destination as? SheetViewController {
+            sheet.setOptions(["delete", "edit"])
         }
     }
 

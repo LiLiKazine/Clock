@@ -19,8 +19,6 @@ class GalleryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         assert(albumManager != nil && startIndexPath != nil, "Did not find album.")
-//        let photo = albumManager.photos.object(at: startIndexPath.row) as! Photo
-//        let image = UIImage(data: photo.content!)
     }
     
     private func handleAction(_ i: Int) {

@@ -88,14 +88,18 @@ class TimePlateView: UIView {
     
     private func animateHands() {
         guard currentTime.count == 3  else { return }
-        let toAngle: (Int, CGFloat) -> CGFloat = { val, denominator in
-            let angle = CGFloat(val) / denominator * CGFloat.pi * 2
+        let toAngle: (CGFloat, CGFloat) -> CGFloat = { val, denominator in
+            let angle = val / denominator * CGFloat.pi * 2
             return angle
         }
         let hands = [hourHand, minHand, secHand]
+        
         for i in 0...2 {
             let denominator: CGFloat = i == 0 ? 12.0 : 60.0
-            let value: Int = i == 0 ? currentTime[i] % 12 : currentTime[i]
+            let value: CGFloat = i == 0 ?
+                CGFloat(currentTime[0]%12) + CGFloat(currentTime[1])/60
+                :
+                CGFloat(currentTime[i])
             let angle = toAngle(value, denominator)
             hands[i].transform = CATransform3DRotate(CATransform3DIdentity, angle, 0, 0, 1)
         }

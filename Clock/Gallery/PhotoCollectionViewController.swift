@@ -11,6 +11,16 @@ import UIKit
 private let reuseIdentifier = "Cell"
 
 class PhotoCollectionViewController: UICollectionViewController {
+    
+    var currentImage: UIImage? {
+        if let ip = self.collectionView.indexPathsForVisibleItems.first,
+           let photo = dataSource.object(at: ip.row) as? Photo,
+           let data = photo.content,
+           let image = UIImage(data: data) {
+            return image
+        }
+        return nil
+    }
 
     var dataSource = NSOrderedSet()
     var indexPath: IndexPath?

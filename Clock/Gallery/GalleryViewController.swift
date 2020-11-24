@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import iOSPhotoEditor
 
 class GalleryViewController: UIViewController {
 
@@ -27,6 +28,21 @@ class GalleryViewController: UIViewController {
             print("delete")
         case 1:
             print("edit")
+            guard let image = displayVC?.currentImage else {
+                return
+            }
+            let photoEditor = PhotoEditorViewController(nibName:"PhotoEditorViewController",bundle: Bundle(for: PhotoEditorViewController.self))
+            
+            //PhotoEditorDelegate
+            photoEditor.photoEditorDelegate = self
+
+            //The image to be edited
+            photoEditor.image = image
+
+            //Present the View Controller
+            DispatchQueue.main.async {
+                self.present(photoEditor, animated: true, completion: nil)
+            }
         default:
             break
         }
@@ -51,4 +67,14 @@ class GalleryViewController: UIViewController {
         }
     }
 
+}
+
+extension GalleryViewController: PhotoEditorDelegate {
+    func doneEditing(image: UIImage) {
+        // the edited image
+    }
+        
+    func canceledEditing() {
+        print("Canceled")
+    }
 }
